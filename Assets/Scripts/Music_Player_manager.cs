@@ -2,35 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+//using System;
 
 public class Music_Player_manager : MonoBehaviour
 {
-  
+    static System.Random _random = new System.Random(); //shuffle random
+
 
     [Header("Audio Stuff")]
     private AudioSource audioSource;
     private AudioClip audioClip;
     private string soundPath;
     private string[] fileNames; //get list of files 
+    private int[] songListID;//current list of songs(only ID's)
 
-    int currentSongID;//current song ID
-    int lastSongID;//last song ID
+    //[HideInInspector]
+    public bool pauseSource=false;//true for pause//false for play
+
+    int currentSongID=0;//current song counter id in songListId's
+    int lastPlayedId = -1;//last played song
+    
+
+    static void Shuffle<T>(T[] array) ///shuffle of array
+    {
+        /// <summary>
+        /// Fisher-Yates shuffle.
+        /// https://www.dotnetperls.com/fisher-yates-shuffle
+        /// 
+        /// </summary>
+        /// 
+        int n = array.Length;
+        for (int i = 0; i < n; i++)
+        {
+            // Use Next on random instance with an argument.
+            // ... The argument is an exclusive bound.
+            //     So we will not go past the end of the array.
+            int r = i + _random.Next(n - i);
+            T t = array[r];
+            array[r] = array[i];
+            array[i] = t;
+        }
+    }
     void Awake()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
         soundPath = Application.streamingAssetsPath + "/ExampleSounds/"; //get our music path in StreamingAssets/Music/ 
         fileNames = Directory.GetFiles(soundPath, "*.ogg");
-        currentSongID = GetNewSongID();
-        lastSongID = currentSongID;
+
+        songListID = new int[fileNames.Length];
+        for(int i=0; i < fileNames.Length; i++)
+        {
+            songListID[i] = i;
+        }
+        Shuffle(songListID); //initial shuffle
+        
+
+        
        // StartCoroutine(LoadAudio());
     }
 
 
-    private int GetNewSongID()
-    {
-        return Random.Range(0, fileNames.Length - 1);
-    }
+    
 
     private IEnumerator LoadAudio(string audioName)
     {
@@ -40,7 +72,6 @@ public class Music_Player_manager : MonoBehaviour
 
         audioClip = request.GetAudioClip();
         audioClip.name = fileNames[currentSongID];
-
         PlayAudioFile();
     }
 
@@ -49,6 +80,8 @@ public class Music_Player_manager : MonoBehaviour
         audioSource.clip = audioClip;
         audioSource.Play();
         audioSource.loop = false;
+        currentSongID++;
+        
     }
 
     private WWW GetAudioFromFile(string filename)
@@ -59,18 +92,26 @@ public class Music_Player_manager : MonoBehaviour
 
     void Update()
     {
-        if (!audioSource.isPlaying)
+        int lastCycleSong;
+        if (currentSongID == fileNames.Length)
         {
-            while (currentSongID == lastSongID)
+            lastCycleSong = songListID[currentSongID - 1];
+            currentSongID = 0;
+            lastPlayedId = -1;
+            Shuffle(songListID);
+            while (lastCycleSong == songListID[0]) //проверка, что последняя песня в цикле не будет первой в следующем
             {
-                currentSongID = GetNewSongID();
+                Shuffle(songListID);
             }
-            lastSongID = currentSongID;
-            StartCoroutine(LoadAudio(fileNames[currentSongID]));
-            while (!audioSource.isPlaying)
-            {
-                bool test =true;
+        }
+
+        if (!audioSource.isPlaying && lastPlayedId!=currentSongID)
+        {
+            if (audioClip!=null) {
+                audioClip.UnloadAudioData();
             }
+            lastPlayedId = currentSongID;
+            StartCoroutine(LoadAudio(fileNames[songListID[currentSongID]]));
         }
     }
 
