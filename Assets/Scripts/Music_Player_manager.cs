@@ -8,12 +8,13 @@ public class Music_Player_manager : MonoBehaviour
 {
     static System.Random _random = new System.Random(); //shuffle random
 
+     
 
     [Header("Audio Stuff")]
     private AudioSource audioSource;
     private AudioClip audioClip;
     private string soundPath;
-    private string[] fileNames; //get list of files 
+    public string[] fileNames; //get list of files 
     private int[] songListID;//current list of songs(only ID's)
 
     //[HideInInspector]
@@ -22,7 +23,7 @@ public class Music_Player_manager : MonoBehaviour
     int currentSongID=0;//current song counter id in songListId's
     int lastPlayedId = -1;//last played song
     
-
+    
     static void Shuffle<T>(T[] array) ///shuffle of array
     {
         /// <summary>
@@ -43,11 +44,26 @@ public class Music_Player_manager : MonoBehaviour
             array[i] = t;
         }
     }
+    
     void Awake()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
-        soundPath = Application.streamingAssetsPath + "/ExampleSounds/"; //get our music path in StreamingAssets/Music/ 
-        fileNames = Directory.GetFiles(soundPath, "*.ogg");
+        
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            soundPath = "jar:file://" + Application.dataPath + "!/assets" + "/Music/";
+        }
+          
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            soundPath = Application.dataPath + "/Raw" + "/Music/"; //get our music path in StreamingAssets/Music/
+        }
+        else if (Application.isEditor)
+        {
+            soundPath = Application.streamingAssetsPath + "/Music/"; //get our music path in StreamingAssets/Music/
+        }
+       // soundPath = "file://"+Application.streamingAssetsPath + "/ExampleSounds/"; //get our music path in StreamingAssets/Music/ 
+        
 
         songListID = new int[fileNames.Length];
         for(int i=0; i < fileNames.Length; i++)
@@ -66,8 +82,8 @@ public class Music_Player_manager : MonoBehaviour
 
     private IEnumerator LoadAudio(string audioName)
     {
-        WWW request = GetAudioFromFile(audioName);
-        Debug.Log(audioName);
+        WWW request = GetAudioFromFile(soundPath+audioName);
+        
         yield return request;
 
         audioClip = request.GetAudioClip();
@@ -114,5 +130,5 @@ public class Music_Player_manager : MonoBehaviour
             StartCoroutine(LoadAudio(fileNames[songListID[currentSongID]]));
         }
     }
-
+    
 }

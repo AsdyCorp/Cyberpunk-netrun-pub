@@ -7368,7 +7368,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8296172667371604308}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e404de4094bcaa647866f80902bca125, type: 3}
   m_Name: 
@@ -7479,7 +7479,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8296172667371604308}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea7f971ab6e34864587fca1ff7110365, type: 3}
   m_Name: 
@@ -7632,6 +7632,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10cc9778f3190404eb457566405dd9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileNames:
+  - street-traffic.ogg
+  - save-this-planet.ogg
+  - Example.ogg
+  - pilgrimage-to-earth.ogg
+  - activation(3).ogg
   pauseSource: 0
 --- !u!1 &8296172667914546160
 GameObject:
