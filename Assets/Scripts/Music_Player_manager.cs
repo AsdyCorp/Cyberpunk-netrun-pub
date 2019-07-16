@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 //using System;
-
+/// <summary>
+/// нужно закидывать точное название трека.ogg в массив fileNames, треки в папке стриминга - музыка
+/// </summary>
 public class Music_Player_manager : MonoBehaviour
 {
     static System.Random _random = new System.Random(); //shuffle random
@@ -18,7 +20,8 @@ public class Music_Player_manager : MonoBehaviour
     private int[] songListID;//current list of songs(only ID's)
 
     //[HideInInspector]
-    public bool pauseSource=false;//true for pause//false for play
+    public bool pauseSource;//true for pause//false for play
+    private bool soundSourceActive;//проверка на значение в сохраненных настройках уровня громкости > 0.05 
 
     int currentSongID=0;//current song counter id in songListId's
     int lastPlayedId = -1;//last played song
@@ -47,45 +50,67 @@ public class Music_Player_manager : MonoBehaviour
     
     void Awake()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-        
-        if (Application.platform == RuntimePlatform.Android)
+        float soundLevel= PlayerPrefs.GetFloat("sound_Slider", 1.0f);
+        if (soundLevel > 0.05f)
         {
-            soundPath = "jar:file://" + Application.dataPath + "!/assets" + "/Music/";
+            soundSourceActive = true;
         }
-          
-        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        else
         {
-            soundPath = Application.dataPath + "/Raw" + "/Music/"; //get our music path in StreamingAssets/Music/
+            soundSourceActive = false;
         }
-        else if (Application.isEditor)
+        if (soundSourceActive) //не включаем ничего ,если в настройках звук на нуле(<0.05)
         {
-            soundPath = Application.streamingAssetsPath + "/Music/"; //get our music path in StreamingAssets/Music/
-        }
-       // soundPath = "file://"+Application.streamingAssetsPath + "/ExampleSounds/"; //get our music path in StreamingAssets/Music/ 
-        
+            audioSource = gameObject.GetComponent<AudioSource>();
+            audioSource.volume = soundLevel;
 
-        songListID = new int[fileNames.Length];
-        for(int i=0; i < fileNames.Length; i++)
-        {
-            songListID[i] = i;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                soundPath = "jar:file://" + Application.dataPath + "!/assets" + "/Music/";
+            }
+
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                soundPath = Application.dataPath + "/Raw" + "/Music/"; //get our music path in StreamingAssets/Music/
+            }
+            else if (Application.isEditor)
+            {
+                soundPath = Application.streamingAssetsPath + "/Music/"; //get our music path in StreamingAssets/Music/
+            }
+            // soundPath = "file://"+Application.streamingAssetsPath + "/ExampleSounds/"; //get our music path in StreamingAssets/Music/ 
+
+
+            songListID = new int[fileNames.Length];
+            for (int i = 0; i < fileNames.Length; i++)
+            {
+                songListID[i] = i;
+            }
+            Shuffle(songListID); //initial shuffle
         }
-        Shuffle(songListID); //initial shuffle
-        
 
         
        // StartCoroutine(LoadAudio());
     }
 
 
-    
+    public void PauseAudioSource()//set audio on pause
+    {
+        pauseSource = true;
+        audioSource.Pause();
+    }
+
+    public void UnPauseAudioSource()
+    {
+        pauseSource = false;
+        audioSource.UnPause();
+    }
 
     private IEnumerator LoadAudio(string audioName)
     {
         WWW request = GetAudioFromFile(soundPath+audioName);
         
         yield return request;
-
+        
         audioClip = request.GetAudioClip();
         audioClip.name = fileNames[currentSongID];
         PlayAudioFile();
@@ -109,7 +134,7 @@ public class Music_Player_manager : MonoBehaviour
     void Update()
     {
         int lastCycleSong;
-        if (currentSongID == fileNames.Length)
+        if (currentSongID == fileNames.Length && soundSourceActive==true)
         {
             lastCycleSong = songListID[currentSongID - 1];
             currentSongID = 0;
@@ -121,14 +146,19 @@ public class Music_Player_manager : MonoBehaviour
             }
         }
 
-        if (!audioSource.isPlaying && lastPlayedId!=currentSongID)
+        if (soundSourceActive == true &&pauseSource==false && !audioSource.isPlaying && lastPlayedId!=currentSongID )
         {
             if (audioClip!=null) {
                 audioClip.UnloadAudioData();
             }
             lastPlayedId = currentSongID;
-            StartCoroutine(LoadAudio(fileNames[songListID[currentSongID]]));
+            
+                StartCoroutine(LoadAudio(fileNames[songListID[currentSongID]]));
+            
         }
+        
+        
+
     }
     
 }
