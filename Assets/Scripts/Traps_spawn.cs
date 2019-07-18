@@ -75,27 +75,5 @@ public class Traps_spawn : MonoBehaviour
         }
 
     }
-    void FixedUpdate()
-    {
-        
-        //Spikes[10].transform.position = Plate_Lines[5].GetComponent<Plate_individual_array>().plates[3].transform.position;
-
-        for(int i=0; i<Spikes.Count; i++)
-        {
-            if (Mathf.Abs(Player.transform.position.z - Spikes[i].transform.position.z) < 0.2f && Player.GetComponent<simple_controller>().current_plate_id == Spike_lines_id[i])
-            {
-                Player.GetComponent<Death>().DeathCall();
-                gameObject.GetComponent<Traps_spawn>().enabled = false;
-            }
-        }
-
-        /*if(Player.GetComponent<simple_controller>().current_plate_id==3 && Mathf.Abs(Player.transform.position.z- Spikes[10].transform.position.z) < 0.2f)
-        {
-            Player.GetComponent<Death>().DeathCall();
-            gameObject.GetComponent<Traps_spawn>().enabled = false;
-        }*/
-        //Spikes[10].transform.position=
-
-    }
-
+    
 }
