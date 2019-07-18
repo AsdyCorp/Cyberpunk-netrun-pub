@@ -27,6 +27,7 @@ public class Death : MonoBehaviour
         gameObject.GetComponent<simple_mover_trasy>().speed = 0;
         gameObject.GetComponent<car_center_drift>().enabled = false;
         gameObject.GetComponent<simple_controller>().enabled = false;
+        gameObject.GetComponent<Music_Player_manager>().DeathSoundEvent(); //играем звуковой эффект смерти
 
         Death_explosion.transform.position = transform.position;
         Car_model.active = false;
@@ -40,6 +41,8 @@ public class Death : MonoBehaviour
             PlayerPrefs.Save();
         }
         gameObject.GetComponent<Score>().enabled = false;
+
+       
         
         Camera.main.gameObject.GetComponent<Grayscale>().enabled = true;
         After_Death_UI.SetActive(true);

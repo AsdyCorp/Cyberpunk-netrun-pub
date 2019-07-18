@@ -7632,12 +7632,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10cc9778f3190404eb457566405dd9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileNames:
-  - street-traffic.ogg
-  - save-this-planet.ogg
-  - Example.ogg
-  - pilgrimage-to-earth.ogg
-  - activation(3).ogg
+  musicBase:
+  - {fileID: 8300000, guid: b580cf29762a52344bedd895453ba344, type: 3}
+  - {fileID: 8300000, guid: 4615fadc05417c4498e0dada77323335, type: 3}
+  - {fileID: 8300000, guid: 94cbe613973a06f4c8fdd85b8463828a, type: 3}
+  - {fileID: 8300000, guid: 1d247eb36a452184f9c8f7791ed27871, type: 3}
+  - {fileID: 8300000, guid: e6ed64c6cedd12b4eb46784366792ccb, type: 3}
   pauseSource: 0
 --- !u!1 &8296172667914546160
 GameObject:

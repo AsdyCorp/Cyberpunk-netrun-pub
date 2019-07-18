@@ -77,6 +77,7 @@ public class Traps_spawn : MonoBehaviour
     }
     void FixedUpdate()
     {
+        
         //Spikes[10].transform.position = Plate_Lines[5].GetComponent<Plate_individual_array>().plates[3].transform.position;
 
         for(int i=0; i<Spikes.Count; i++)
