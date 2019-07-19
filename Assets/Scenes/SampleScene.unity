@@ -1155,8 +1155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 0.17
-  intensity: 0.72
+  threshold: 1.5
+  intensity: 2.5
   blurSize: 0.25
   blurIterations: 2
   blurType: 0

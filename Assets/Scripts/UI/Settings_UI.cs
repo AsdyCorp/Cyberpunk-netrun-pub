@@ -59,8 +59,8 @@ public class Settings_UI : MonoBehaviour
         /******/
         is_gyro = PlayerPrefs.GetInt("gyro_toggle", 0);///get preferences from playerprefs to settings vars
         is_button = PlayerPrefs.GetInt("gui_buttons_toogle", 1);
-        sound_level =  PlayerPrefs.GetFloat("sound_Slider", 1.0f);
-        sensitivity_level = PlayerPrefs.GetFloat("sensitivity_slider", 1.0f); ///
+        sound_level =  PlayerPrefs.GetFloat("sound_Slider", 0.5f);
+        sensitivity_level = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f); ///
 
         if ((is_button == 1 && is_gyro == 1) || (is_button == 0 && is_gyro == 0)) //check for only one option
         {

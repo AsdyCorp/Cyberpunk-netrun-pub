@@ -35,7 +35,7 @@ public class Fog : MonoBehaviour
         fog_str = (0.5f + 0.5f*Mathf.Sin(0.25f*multiplier - 1.5708f))/6;
         //Debug.Log(fog_str);
         RenderSettings.fogDensity = fog_str;
-        camera_bloom.intensity = (fog_str) * 6+0.7f;
+        //camera_bloom.intensity = (fog_str) * 6+0.7f;
         //RenderSettings.fog
         //RenderSettings.fogColor = new Color(255-(fog_str * 255), 0, 0,0);
     }

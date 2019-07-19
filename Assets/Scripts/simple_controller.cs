@@ -105,6 +105,14 @@ public class simple_controller : MonoBehaviour
     void FixedUpdate()
     {
        
+        if(is_left || is_right)
+        {
+            Flares_Renderer_enable();
+        }
+        else
+        {
+            Flares_Renderer_disable();
+        }
 
         ////test barier 
         if ((int)(Mathf.Round(transform.position.x / 0.6f) + 5) >= 10)

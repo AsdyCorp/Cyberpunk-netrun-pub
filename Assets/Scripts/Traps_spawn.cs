@@ -56,7 +56,8 @@ public class Traps_spawn : MonoBehaviour
             {
                 i_spike_mod = 0;
             }
-
+            Spikes[i_spike_mod].GetComponent<Pyramid_erection_lol>().enabled = false;
+            Spikes[i_spike_mod].GetComponent<Pyramid_erection_lol>().enabled = true;
             if (Random.Range(0, 20) == 13)
             {
                 Spike_lines_id[i_spike_mod] = i;//save column position for soike;
