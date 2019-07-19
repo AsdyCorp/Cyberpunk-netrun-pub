@@ -32,6 +32,9 @@ public class simple_controller : MonoBehaviour
 
     public bool is_gyro = false;
 
+    private float sensitivity;
+
+
     ///render flares only in movement
     void Flares_Renderer_enable()
     {
@@ -80,6 +83,8 @@ public class simple_controller : MonoBehaviour
 
     void Start()
     {
+
+        sensitivity = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f);
 
         is_gyro = false;
 
@@ -154,7 +159,7 @@ public class simple_controller : MonoBehaviour
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
             
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed);
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*sensitivity);
             
             
             if (Y_car_angle>= max_rotation_angle*-1)
@@ -165,7 +170,7 @@ public class simple_controller : MonoBehaviour
         if (is_right && right_barrier == false)
         {
             
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed);
+                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*sensitivity);
             
             if (Y_car_angle<=max_rotation_angle)
             {
