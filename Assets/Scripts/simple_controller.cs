@@ -25,6 +25,7 @@ public class simple_controller : MonoBehaviour
 
     public int current_plate_id;
 
+    public GameObject[] Barriers; //обьекты барьеров//0-левый//1-правый
     private bool right_barrier = false; ///проверка на столкновение с барьерами
     private bool left_barrier = false;
 
@@ -115,12 +116,12 @@ public class simple_controller : MonoBehaviour
         }
 
         ////test barier 
-        if ((int)(Mathf.Round(transform.position.x / 0.6f) + 5) >= 10)
+        if (Vector3.Distance(Barriers[1].transform.position, transform.position)<0.2f)
         {
             right_barrier = true;
             left_barrier = false;
         }
-        else if ((int)(Mathf.Round(transform.position.x / 0.6f) + 5) <= -1)
+        else if (Vector3.Distance(Barriers[0].transform.position, transform.position) < 0.2f)
         {
             left_barrier = true;
             right_barrier = false;
@@ -167,7 +168,7 @@ public class simple_controller : MonoBehaviour
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
             
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*sensitivity);
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2));
             
             
             if (Y_car_angle>= max_rotation_angle*-1)
@@ -178,7 +179,7 @@ public class simple_controller : MonoBehaviour
         if (is_right && right_barrier == false)
         {
             
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*sensitivity);
+                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2));
             
             if (Y_car_angle<=max_rotation_angle)
             {

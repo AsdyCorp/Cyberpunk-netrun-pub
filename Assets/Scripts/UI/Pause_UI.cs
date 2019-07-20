@@ -10,13 +10,14 @@ public class Pause_UI : MonoBehaviour
     public BlurOptimized blur_script;//блюр скрипт
     Music_Player_manager musicManager;
     public GameObject[] UI_hide_elements;// UI элементы, которые прячем при паузе
-
+    simple_controller playerController;
     void Start()
     {
         blur_script.enabled = false;
         Pause_par_obj.SetActive(false);
         Time.timeScale = 1.0f;
         musicManager = gameObject.GetComponent<Music_Player_manager>();
+        playerController = gameObject.GetComponent<simple_controller>();
     }
     public void pause()
     {
@@ -35,6 +36,8 @@ public class Pause_UI : MonoBehaviour
         }
         else
         {
+            playerController.left_stop();
+            playerController.right_stop();
             blur_script.enabled = false;
             Pause_par_obj.SetActive(false);
             Time.timeScale = 1.0f;

@@ -259,7 +259,7 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/I/Key_publishing_Runer/Asdy.keystore
+  AndroidKeystoreName: C:/Users/kj-WS/Documents/Key_publishing_Runer/Asdy.keystore
   AndroidKeyaliasName: cyber_key
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
