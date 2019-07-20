@@ -12,8 +12,8 @@ public class Traps_spawn : MonoBehaviour
 
     [HideInInspector]
     public List<GameObject> Spikes = new List<GameObject>();
-    [HideInInspector]
-    public List<GameObject> Lazers = new List<GameObject>();
+    //[HideInInspector]
+    //public List<GameObject> Lazers = new List<GameObject>();
     public GameObject Player;
     [HideInInspector]
     public Plate_individual_array plate_array;
@@ -37,8 +37,8 @@ public class Traps_spawn : MonoBehaviour
             Spike_lines_id[i] = -1;
             GameObject spike = Instantiate(Spike_prefab, new Vector3(-100, -100, -100), Quaternion.identity);
             Spikes.Add(spike);
-            GameObject lazer = Instantiate(Lazer_prefab, new Vector3(-100, -100, -100), Quaternion.identity);
-            Lazers.Add(lazer);
+            //GameObject lazer = Instantiate(Lazer_prefab, new Vector3(-100, -100, -100), Quaternion.identity);
+            //Lazers.Add(lazer);
         }
 
         //Spikes[10].transform.position = Plate_Lines[5].GetComponent<Plate_individual_array>().plates[3].transform.position;

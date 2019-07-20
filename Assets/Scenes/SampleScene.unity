@@ -4111,6 +4111,7 @@ GameObject:
   - component: {fileID: 8296172667371604319}
   - component: {fileID: 8296172667371604320}
   - component: {fileID: 8296172667371604321}
+  - component: {fileID: 8296172667371604322}
   m_Layer: 0
   m_Name: Car8
   m_TagString: Player
@@ -4260,7 +4261,6 @@ MonoBehaviour:
   Lazer_prefab: {fileID: 5178959128978634615, guid: 6b1bf6990c75def4b85a7b5c9a53217c,
     type: 3}
   Spikes: []
-  Lazers: []
   Player: {fileID: 8296172667371604308}
   plate_array: {fileID: 0}
   plate_script: {fileID: 0}
@@ -4405,6 +4405,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1d58c918f785794ba585908f9cbd918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8296172667371604322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667371604308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9b7e1f2517f614999f4a25baa89327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8296172667914546160

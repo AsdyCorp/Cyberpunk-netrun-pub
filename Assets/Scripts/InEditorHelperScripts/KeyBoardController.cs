@@ -15,21 +15,24 @@ public class KeyBoardController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Application.isEditor)
         {
-            playerController.left_start();
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            playerController.left_stop();
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            playerController.right_start();
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            playerController.right_stop();
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                playerController.left_start();
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                playerController.left_stop();
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                playerController.right_start();
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                playerController.right_stop();
+            }
         }
     }
 }
