@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontal_speed: 10
+  horizontal_speed_multiplier: 1
   car_object_model: {fileID: 8286454809057176019}
   plate_script: {fileID: 8296172667371604310}
   testplate: {fileID: 0}
@@ -4416,7 +4417,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8296172667371604308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee9b7e1f2517f614999f4a25baa89327, type: 3}
+  m_Script: {fileID: 11500000, guid: 5495f353974a757489dd7b79840bd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8296172667914546160

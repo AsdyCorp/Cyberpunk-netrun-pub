@@ -10,20 +10,22 @@ public class Settings_UI : MonoBehaviour
 
     public GameObject Sound_Slider;
     public GameObject Sensitivity_slider;
-    public GameObject Gyro_toggle;
+    public GameObject Accel_toggle;
     public GameObject Gui_buttons_toggle;
-
+    public GameObject Accelerometer_text;
 
     private Toggle gui_buttons_toogle;
-    private Toggle gyro_toggle;
+    private Toggle accel_toggle;
     private Slider sound_Slider;
     private Slider sensitivity_slider;
 
-    private int is_gyro=0;
+    private int is_accel=0;
     private int is_button=0;
     private float sound_level=1.0f;
     private float sensitivity_level=1.0f;
     // Start is called before the first frame update
+
+    bool is_accel_exist = true; //check if accelerometr exist in device
 
 
     bool ToBoolean(int x)
@@ -51,37 +53,55 @@ public class Settings_UI : MonoBehaviour
     }
     void Start()
     {
-        
+        is_accel_exist = SystemInfo.supportsAccelerometer;
+       
         gui_buttons_toogle = Gui_buttons_toggle.GetComponent<Toggle>();
-        gyro_toggle = Gyro_toggle.GetComponent<Toggle>();
+        accel_toggle = Accel_toggle.GetComponent<Toggle>();
         sound_Slider = Sound_Slider.GetComponent<Slider>();
         sensitivity_slider = Sensitivity_slider.GetComponent<Slider>();
-        /******/
-        is_gyro = PlayerPrefs.GetInt("gyro_toggle", 0);///get preferences from playerprefs to settings vars
-        is_button = PlayerPrefs.GetInt("gui_buttons_toogle", 1);
-        sound_level =  PlayerPrefs.GetFloat("sound_Slider", 0.5f);
-        sensitivity_level = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f); ///
-
-        if ((is_button == 1 && is_gyro == 1) || (is_button == 0 && is_gyro == 0)) //check for only one option
+        if (is_accel_exist == false)
         {
-            PlayerPrefs.SetInt("gyro_toggle", 0);
+            Accelerometer_text.SetActive(true);
+            accel_toggle.isOn = false;
+            accel_toggle.enabled = false;
+        }
+        /******/
+        if (is_accel_exist)
+        {
+            is_accel = PlayerPrefs.GetInt("accel_toggle", 0);///get preferences from playerprefs to settings vars
+            is_button = PlayerPrefs.GetInt("gui_buttons_toogle", 1);
+        }
+        else
+        {
+            is_button = 1;
+            is_accel = 0;
+        }
+        sound_level = PlayerPrefs.GetFloat("sound_Slider", 0.5f);
+        sensitivity_level = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f); ///
+        if ((is_button == 1 && is_accel == 1) || (is_button == 0 && is_accel == 0)) //check for only one option
+        {
+            PlayerPrefs.SetInt("accel_toggle", 0);
             PlayerPrefs.SetInt("gui_buttons_toogle", 1);
             is_button = 1;
-            is_gyro = 0;
+            is_accel = 0;
         }
 
 
         ///set gui to prefs
         gui_buttons_toogle.isOn = ToBoolean(is_button);
-        gyro_toggle.isOn = ToBoolean(is_gyro);
+        accel_toggle.isOn = ToBoolean(is_accel);
         sound_Slider.value = sound_level;
         sensitivity_slider.value = sensitivity_level;
         ///
 
         sound_Slider.onValueChanged.AddListener(delegate { Change_Sound(); });
         sensitivity_slider.onValueChanged.AddListener(delegate { Change_Sensitivity(); });
-        gyro_toggle.onValueChanged.AddListener(delegate { Change_gyro_toggle(); });
-        gui_buttons_toogle.onValueChanged.AddListener(delegate { Change_gui_button_toggle(); });
+        if (is_accel_exist)
+        {
+            accel_toggle.onValueChanged.AddListener(delegate { Change_accel_toggle(); });
+            gui_buttons_toogle.onValueChanged.AddListener(delegate { Change_gui_button_toggle(); });
+        }
+        
 
     }
 
@@ -103,17 +123,17 @@ public class Settings_UI : MonoBehaviour
     public void Change_gui_button_toggle()///change to gui buttons
     {
         is_button = ToInt(gui_buttons_toogle.isOn);
-        is_gyro = ToInt(gyro_toggle.isOn);
-        PlayerPrefs.SetInt("gyro_toggle", is_gyro);
+        is_accel = ToInt(accel_toggle.isOn);
+        PlayerPrefs.SetInt("accel_toggle", is_accel);
         PlayerPrefs.SetInt("gui_buttons_toogle", is_button);
         PlayerPrefs.Save();
     }
 
-    public void Change_gyro_toggle() ///change to gyro
+    public void Change_accel_toggle() ///change to gyro
     {
-        is_gyro = ToInt(gyro_toggle.isOn);
+        is_accel = ToInt(accel_toggle.isOn);
         is_button = ToInt(gui_buttons_toogle.isOn);
-        PlayerPrefs.SetInt("gyro_toggle", is_gyro);
+        PlayerPrefs.SetInt("accel_toggle", is_accel);
         PlayerPrefs.SetInt("gui_buttons_toogle", is_button);
         PlayerPrefs.Save();
     }

@@ -7,7 +7,7 @@ public class simple_controller : MonoBehaviour
 {
 
     public float horizontal_speed = 1.5f; //скорость горизантального пооворота машины, т.е. чувствительность управления 
-
+    public float horizontal_speed_multiplier=1.0f; //множитель от акслерометра
     public Transform car_object_model; //модель машины, которую вращаем 
 
     public Plate_generator plate_script;
@@ -168,7 +168,7 @@ public class simple_controller : MonoBehaviour
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
             
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2));
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
             
             
             if (Y_car_angle>= max_rotation_angle*-1)
@@ -179,7 +179,7 @@ public class simple_controller : MonoBehaviour
         if (is_right && right_barrier == false)
         {
             
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2));
+                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
             
             if (Y_car_angle<=max_rotation_angle)
             {
