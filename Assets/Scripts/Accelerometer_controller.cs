@@ -14,18 +14,23 @@ public class Accelerometer_controller : MonoBehaviour
         is_accel= PlayerPrefs.GetInt("accel_toggle", 0);
     }
 
+    /*void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 500, 100), ""+ Input.acceleration.x);
+    }*/
+
     // Update is called once per frame
     void Update()
     {
         if (is_accel == 1)
         {
-            if (Input.acceleration.x < -0.1f)
+            if (Input.acceleration.x < -0.05)
             {
                 playerController.left_start();
                 playerController.right_stop();
                 playerController.horizontal_speed_multiplier = Mathf.Abs(Input.acceleration.x * 5);
             }
-            else if(Input.acceleration.x > 0.1f)
+            else if(Input.acceleration.x > 0.05)
             {
                 playerController.right_start();
                 playerController.left_stop();
@@ -33,10 +38,12 @@ public class Accelerometer_controller : MonoBehaviour
             }
             else
             {
-                playerController.left_stop();
                 playerController.right_stop();
-                playerController.horizontal_speed_multiplier = 1.0f;
+                playerController.left_stop();
             }
+            
+            
+            
         }
         
     }

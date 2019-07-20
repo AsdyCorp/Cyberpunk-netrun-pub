@@ -31,7 +31,7 @@ public class simple_controller : MonoBehaviour
 
     public GameObject Event_system;
 
-    public bool is_gyro = false;
+    int is_accel;
 
     private float sensitivity;
 
@@ -86,8 +86,8 @@ public class simple_controller : MonoBehaviour
     {
 
         sensitivity = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f);
+        is_accel = PlayerPrefs.GetInt("accel_toggle", 0);
 
-        is_gyro = false;
 
         ///от заноса при перезапуске
         Event_system.SetActive(true);
@@ -102,7 +102,7 @@ public class simple_controller : MonoBehaviour
     }
 
 
-
+    
     void FixedUpdate()
     {
        
@@ -168,22 +168,42 @@ public class simple_controller : MonoBehaviour
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
             
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
-            
-            
-            if (Y_car_angle>= max_rotation_angle*-1)
+            transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
+
+            if (is_accel == 1)
             {
-                car_object_model.Rotate(Vector3.up * Time.deltaTime * -300*(Y_car_angle / 115 + 0.5f));
+                if (Y_car_angle >= max_rotation_angle * -1)
+                {
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*-45, 0);
+                }
             }
+            else
+            {
+                if (Y_car_angle >= max_rotation_angle * -1)
+                {
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) * (horizontal_speed_multiplier));
+                }
+            }
+            
         }
         if (is_right && right_barrier == false)
         {
             
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
-            
-            if (Y_car_angle<=max_rotation_angle)
+            transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
+
+            if (is_accel == 1)
             {
-                car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle*-1)/115 + 0.5f));
+                if (Y_car_angle <= max_rotation_angle)
+                {
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*45, 0);
+                }
+            }
+            else
+            {
+                if (Y_car_angle <= max_rotation_angle)
+                {
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) * (horizontal_speed_multiplier));
+                }
             }
         }
        // Debug.Log(Y_car_angle +" "+ max_rotation_angle);

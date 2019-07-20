@@ -279,7 +279,6 @@ MonoBehaviour:
   - {fileID: 1461628555}
   - {fileID: 1028491450}
   Event_system: {fileID: 876631756}
-  is_gyro: 0
 --- !u!1 &365456125
 GameObject:
   m_ObjectHideFlags: 0
@@ -4113,6 +4112,7 @@ GameObject:
   - component: {fileID: 8296172667371604320}
   - component: {fileID: 8296172667371604321}
   - component: {fileID: 8296172667371604322}
+  - component: {fileID: 8296172667371604323}
   m_Layer: 0
   m_Name: Car8
   m_TagString: Player
@@ -4420,6 +4420,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5495f353974a757489dd7b79840bd132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8296172667371604323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667371604308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765b884317b58db4aabf13e8f30c664c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onGUIControllers:
+  - {fileID: 1411535279}
+  - {fileID: 1917309545}
 --- !u!1 &8296172667914546160
 GameObject:
   m_ObjectHideFlags: 0
