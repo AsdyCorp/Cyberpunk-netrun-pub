@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class simple_controller : MonoBehaviour
 
 {
-
+    public float forwardSpeed;
     public float horizontal_speed = 1.5f; //скорость горизантального пооворота машины, т.е. чувствительность управления 
     public float horizontal_speed_multiplier=0f; //множитель от акслерометра
     public Transform car_object_model; //модель машины, которую вращаем 
@@ -35,6 +35,7 @@ public class simple_controller : MonoBehaviour
 
     private float sensitivity;
 
+    Quaternion startRot; //current rotation 
 
     ///render flares only in movement
     void Flares_Renderer_enable()
@@ -88,7 +89,7 @@ public class simple_controller : MonoBehaviour
         sensitivity = PlayerPrefs.GetFloat("sensitivity_slider", 0.5f);
         is_accel = PlayerPrefs.GetInt("accel_toggle", 0);
 
-
+        startRot = car_object_model.rotation;
         ///от заноса при перезапуске
         Event_system.SetActive(true);
         is_left = false;
@@ -100,13 +101,18 @@ public class simple_controller : MonoBehaviour
         current_plate_id = 4;
         
     }
+    void OnGUI()
+    {
+        //GUI.Label(new Rect(10, 10, 500, 100), ""+ Vector3.Lerp(curRot, car_object_model.eulerAngles, 0.5f));
+    }
 
 
-    
     void FixedUpdate()
     {
-       
-        if(is_left || is_right)
+
+        transform.Translate(transform.forward * forwardSpeed);
+
+        if (is_left || is_right)
         {
             Flares_Renderer_enable();
         }
@@ -175,7 +181,10 @@ public class simple_controller : MonoBehaviour
                 transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*-10, 0);
+                    //curRot= new Vector3(0, horizontal_speed_multiplier * -10, 0);
+                    //Debug.Log();
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier * -10, 0);
+
                 }
             }
             else
@@ -183,7 +192,7 @@ public class simple_controller : MonoBehaviour
                 transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) * (horizontal_speed_multiplier));
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) );
                 }
             }
             
@@ -198,7 +207,7 @@ public class simple_controller : MonoBehaviour
                 transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 if (Y_car_angle <= max_rotation_angle)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*10, 0);
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier * 10, 0);
                 }
             }
             else
@@ -206,21 +215,17 @@ public class simple_controller : MonoBehaviour
                 transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
                 if (Y_car_angle <= max_rotation_angle)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) * (horizontal_speed_multiplier));
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) );
                 }
             }
         }
        // Debug.Log(Y_car_angle +" "+ max_rotation_angle);
-        if (straight_rot && horizontal_speed_multiplier/5<0.05f) //нормализуем машину после поворота
+        if (straight_rot) //нормализуем машину после поворота
         {
 
-            if (Y_car_angle >1.5f)
+            if (Quaternion.Angle(startRot,car_object_model.rotation)> 0.01f)
             {
-                car_object_model.Rotate(0,-2,0);
-            }
-            else if (Y_car_angle < -1.5f)
-            {
-                car_object_model.Rotate(0, 2, 0);
+                car_object_model.rotation = Quaternion.Lerp(car_object_model.rotation, startRot, Time.deltaTime*5 );
             }
             else
             {

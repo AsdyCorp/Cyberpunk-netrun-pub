@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1732ec2f3b15c4b8aa70be3ff94bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardSpeed: 0.1
   horizontal_speed: 10
   horizontal_speed_multiplier: 1
   car_object_model: {fileID: 8286454809057176019}
@@ -4127,7 +4128,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8296172667371604308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e404de4094bcaa647866f80902bca125, type: 3}
   m_Name: 

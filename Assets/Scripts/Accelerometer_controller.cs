@@ -24,23 +24,23 @@ public class Accelerometer_controller : MonoBehaviour
     {
         if (is_accel == 1)
         {
-            if (Input.acceleration.x < -0.05)
+            if (Input.acceleration.x < -0.03)
             {
                 playerController.left_start();
-                playerController.right_stop();
+                
                 playerController.horizontal_speed_multiplier = Mathf.Abs(Input.acceleration.x * 5);
             }
-            else if(Input.acceleration.x > 0.05)
+            else if(Input.acceleration.x > 0.03)
             {
                 playerController.right_start();
-                playerController.left_stop();
+                
                 playerController.horizontal_speed_multiplier = Mathf.Abs(Input.acceleration.x * 5);
             }
             else
             {
                 playerController.right_stop();
                 playerController.left_stop();
-                playerController.horizontal_speed_multiplier = 0f;
+               
             }
             
             
