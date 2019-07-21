@@ -7,7 +7,7 @@ public class simple_controller : MonoBehaviour
 {
 
     public float horizontal_speed = 1.5f; //скорость горизантального пооворота машины, т.е. чувствительность управления 
-    public float horizontal_speed_multiplier=1.0f; //множитель от акслерометра
+    public float horizontal_speed_multiplier=0f; //множитель от акслерометра
     public Transform car_object_model; //модель машины, которую вращаем 
 
     public Plate_generator plate_script;
@@ -168,17 +168,19 @@ public class simple_controller : MonoBehaviour
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
             
-            transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
+            
 
             if (is_accel == 1)
             {
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*-45, 0);
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*-10, 0);
                 }
             }
             else
             {
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
                     car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) * (horizontal_speed_multiplier));
@@ -189,17 +191,19 @@ public class simple_controller : MonoBehaviour
         if (is_right && right_barrier == false)
         {
             
-            transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed*(sensitivity/2)* horizontal_speed_multiplier);
+            
 
             if (is_accel == 1)
             {
+                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 if (Y_car_angle <= max_rotation_angle)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*45, 0);
+                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier*10, 0);
                 }
             }
             else
             {
+                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
                 if (Y_car_angle <= max_rotation_angle)
                 {
                     car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) * (horizontal_speed_multiplier));
@@ -207,7 +211,7 @@ public class simple_controller : MonoBehaviour
             }
         }
        // Debug.Log(Y_car_angle +" "+ max_rotation_angle);
-        if (straight_rot) //нормализуем машину после поворота
+        if (straight_rot && horizontal_speed_multiplier/5<0.05f) //нормализуем машину после поворота
         {
 
             if (Y_car_angle >1.5f)

@@ -40,6 +40,7 @@ public class Accelerometer_controller : MonoBehaviour
             {
                 playerController.right_stop();
                 playerController.left_stop();
+                playerController.horizontal_speed_multiplier = 0f;
             }
             
             
