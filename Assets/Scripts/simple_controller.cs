@@ -101,10 +101,10 @@ public class simple_controller : MonoBehaviour
         current_plate_id = 4;
         
     }
-    void OnGUI()
+    /*void OnGUI()
     {
-        //GUI.Label(new Rect(10, 10, 500, 100), ""+ Vector3.Lerp(curRot, car_object_model.eulerAngles, 0.5f));
-    }
+        GUI.Label(new Rect(10, 10, 500, 100), ""+horizontal_speed_multiplier);
+    }*/
 
 
     void FixedUpdate()
@@ -122,12 +122,12 @@ public class simple_controller : MonoBehaviour
         }
 
         ////test barier 
-        if (Vector3.Distance(Barriers[1].transform.position, transform.position)<0.2f)
+        if (Vector3.Distance(Barriers[1].transform.position, transform.position)<0.3f)
         {
             right_barrier = true;
             left_barrier = false;
         }
-        else if (Vector3.Distance(Barriers[0].transform.position, transform.position) < 0.2f)
+        else if (Vector3.Distance(Barriers[0].transform.position, transform.position) < 0.3f)
         {
             left_barrier = true;
             right_barrier = false;
@@ -178,18 +178,24 @@ public class simple_controller : MonoBehaviour
 
             if (is_accel == 1)
             {
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
+                if (Vector3.Distance(Barriers[0].transform.position, transform.position) > 0.3f)
+                {
+                    transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
+                }
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
                     //curRot= new Vector3(0, horizontal_speed_multiplier * -10, 0);
                     //Debug.Log();
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier * -10, 0);
+                    car_object_model.eulerAngles = new Vector3(0, car_object_model.eulerAngles.y - (horizontal_speed_multiplier * sensitivity*2), 0);
 
                 }
             }
             else
             {
-                transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
+                if (Vector3.Distance(Barriers[0].transform.position, transform.position) > 0.3f)
+                {
+                    transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2));
+                }
                 if (Y_car_angle >= max_rotation_angle * -1)
                 {
                     car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) );
@@ -204,15 +210,21 @@ public class simple_controller : MonoBehaviour
 
             if (is_accel == 1)
             {
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
+                if (Vector3.Distance(Barriers[1].transform.position, transform.position) > 0.3f)
+                {
+                    transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
+                }
                 if (Y_car_angle <= max_rotation_angle)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, horizontal_speed_multiplier * 10, 0);
+                    car_object_model.eulerAngles = new Vector3(0, car_object_model.eulerAngles.y+(horizontal_speed_multiplier*sensitivity*2), 0);
                 }
             }
             else
             {
-                transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) );
+                if (Vector3.Distance(Barriers[1].transform.position, transform.position) > 0.3f)
+                {
+                    transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2));
+                }
                 if (Y_car_angle <= max_rotation_angle)
                 {
                     car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) );
