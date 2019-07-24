@@ -6,7 +6,7 @@ using UnityStandardAssets.ImageEffects;
 public class Fog : MonoBehaviour
 {
     float multiplier = 0.0f;
-    float fog_str;
+    public float fog_str;
     BloomOptimized camera_bloom;
     void Start()
     {

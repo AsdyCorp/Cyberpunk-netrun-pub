@@ -12,6 +12,6 @@ public class SpeedAccelerando : MonoBehaviour
     }
     void Update()
     {
-        playerController.forwardSpeed += Time.deltaTime / 1000;
+        playerController.forwardSpeed += Time.deltaTime / 2000;
     }
 }
