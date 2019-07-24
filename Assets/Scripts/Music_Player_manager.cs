@@ -167,9 +167,19 @@ public class Music_Player_manager : MonoBehaviour
             }
             else
             {
-                audioSource.Stop();
-                audioSource.clip.UnloadAudioData();
-                audioClip.UnloadAudioData();
+                if (audioClip != null)
+                {
+                    audioClip.UnloadAudioData();
+                }
+                if (audioSource != null)
+                {
+                    audioSource.Stop();
+                }
+                if (audioSource.clip != null)
+                {
+                    audioSource.clip.UnloadAudioData();
+                }
+                
             }
             audioSource.pitch = pitchLevel / 2;
             

@@ -42,6 +42,8 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms:
     - Standalone
+    - iPhone
+    - Android
   - serializedVersion: 2
     name: Ultra
     pixelLightCount: 4
@@ -76,9 +78,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    excludedTargetPlatforms:
-    - iPhone
-    - Android
+    excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Android: 0
     Lumin: 1

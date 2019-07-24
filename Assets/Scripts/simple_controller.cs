@@ -120,25 +120,7 @@ public class simple_controller : MonoBehaviour
         {
             Flares_Renderer_disable();
         }
-
-        ////test barier 
-        if (Vector3.Distance(Barriers[1].transform.position, transform.position)<0.3f)
-        {
-            right_barrier = true;
-            left_barrier = false;
-        }
-        else if (Vector3.Distance(Barriers[0].transform.position, transform.position) < 0.3f)
-        {
-            left_barrier = true;
-            right_barrier = false;
-        }
-        else
-        {
-            left_barrier = false;
-            right_barrier = false;
-            straight_rot = true;
-        }
-        ////test barier 
+        
 
         float angle = car_object_model.transform.eulerAngles.y;
         angle = (angle > 180) ? angle - 360 : angle; /// ебаный ui юнити ложь насчёт углов, в реале минуса нет
@@ -169,7 +151,7 @@ public class simple_controller : MonoBehaviour
 
         
 
-        if (is_left && left_barrier==false)
+        if (is_left)
         {
             //Left_Flare.emitting = true;
             //Right_FLare.emitting = true;
@@ -196,14 +178,14 @@ public class simple_controller : MonoBehaviour
                 {
                     transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2));
                 }
-                if (Y_car_angle >= max_rotation_angle * -1)
+                if (Y_car_angle >= max_rotation_angle * -1 * sensitivity)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f) );
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f)*sensitivity );
                 }
             }
             
         }
-        if (is_right && right_barrier == false)
+        if (is_right)
         {
             
             
@@ -225,9 +207,9 @@ public class simple_controller : MonoBehaviour
                 {
                     transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2));
                 }
-                if (Y_car_angle <= max_rotation_angle)
+                if (Y_car_angle <= max_rotation_angle*sensitivity)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f) );
+                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f)* sensitivity );
                 }
             }
         }
