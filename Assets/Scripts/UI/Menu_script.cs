@@ -32,7 +32,7 @@ public class Menu_script : MonoBehaviour
         Time.timeScale = 1.0f;//after pause ui we have time stoped, need to start it
 
 
-        adManager.GetComponent<AdManager>().Display_Banner();
+        
         about_path = "about.txt";
         UI_level = 0;
         Enter_button_obj.GetComponent<Button>().interactable=true;
@@ -60,11 +60,16 @@ public class Menu_script : MonoBehaviour
         Gui_Text_element.text = complete_string;
         //Inicial screen data
 
-        
+        adManager.GetComponent<AdManager>().Display_Banner();
     }
 
     public void Start_button()
     {
+        if (adManager.GetComponent<AdManager>().bannerAD != null)
+        {
+            adManager.GetComponent<AdManager>().bannerAD.Destroy();
+        }
+        
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
         
     }

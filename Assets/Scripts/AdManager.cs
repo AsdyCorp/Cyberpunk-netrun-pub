@@ -8,9 +8,10 @@ public class AdManager : MonoBehaviour
 {
 
     private string App_ID = "ca-app-pub-5124962096143531~6606067576";
-
-    private InterstitialAd InterstitialAd_baner;
-    private BannerView bannerAD;
+    [HideInInspector]
+    public InterstitialAd InterstitialAd_baner;
+    [HideInInspector]
+    public BannerView bannerAD;
     [HideInInspector]
     public bool isLoaded = false;
     [HideInInspector]
@@ -20,20 +21,23 @@ public class AdManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().name== "main_menu"){
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                Request_Banner();
-            }
-        }
-        if (SceneManager.GetActiveScene().name == "SampleScene")
+        if (Application.platform == RuntimePlatform.Android)
         {
-            if (Application.platform == RuntimePlatform.Android)
+            MobileAds.Initialize(App_ID);
+
+            if (SceneManager.GetActiveScene().name == "main_menu")
             {
+
+                Request_Banner();
+
+            }
+            if (SceneManager.GetActiveScene().name == "SampleScene")
+            {
+
                 RequestInterstitial();
+
             }
         }
-        //MobileAds.Initialize(App_ID);
         
     }
 
@@ -41,7 +45,7 @@ public class AdManager : MonoBehaviour
 
     void RequestInterstitial()
     {
-        string interStitial_ID = "ca-app-pub-3940256099942544/1033173712";
+        string interStitial_ID = "ca-app-pub-5124962096143531/1967984419";
         InterstitialAd_baner = new InterstitialAd(interStitial_ID);
 
         // Called when an ad request has successfully loaded.
@@ -56,26 +60,26 @@ public class AdManager : MonoBehaviour
         InterstitialAd_baner.OnAdLeavingApplication += HandleOnAdLeavingApplication;
 
         //real
-        //AdRequest adRequest = new AdRequest.Builder().Build();
+        AdRequest adRequest = new AdRequest.Builder().Build();
 
         //test
-        AdRequest adRequest = new AdRequest.Builder()
-            .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b").Build();
+        //AdRequest adRequest = new AdRequest.Builder()
+           // .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b").Build();
 
         InterstitialAd_baner.LoadAd(adRequest);
     }
 
     void Request_Banner()
     {
-        string banner_id = "ca-app-pub-3940256099942544/6300978111";
+        string banner_id = "ca-app-pub-5124962096143531/4263926958";
         bannerAD = new BannerView(banner_id, AdSize.Banner, AdPosition.Top);
 
 
         //real
-        //AdRequest adRequest = new AdRequest.Builder().Build();
+        AdRequest adRequest = new AdRequest.Builder().Build();
 
-        AdRequest adRequest  = new AdRequest.Builder()
-            .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b").Build();
+       // AdRequest adRequest  = new AdRequest.Builder()
+            //.AddTestDevice("2077ef9a63d2b398840261c8221a0c9b").Build();
 
         bannerAD.LoadAd(adRequest);
     }
