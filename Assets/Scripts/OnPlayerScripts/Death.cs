@@ -11,17 +11,19 @@ public class Death : MonoBehaviour
     public GameObject Car_model;
     public GameObject After_Death_UI;
     public GameObject[] Controll_UI_buttons;
-
+    public GameObject carDriftVisulizer;
     public GameObject Pause_button; 
     //public GameObject[] After_Death_UI_buttons;
     //public GameObject[] After_Death_UI_text;
 
-    private bool death = false; 
+
     public void DeathCall()
     {
-        death = true;
 
         Pause_button.SetActive(false);//при смерти выключаем кнопку паузы
+
+        carDriftVisulizer.SetActive(false); //отключаем линию и шарик от машины до белой линии 
+        carDriftVisulizer.GetComponent<car_drift_visualizer>().dataPacketClone.SetActive(false);
 
 
         gameObject.GetComponent<simple_mover_trasy>().speed = 0;
@@ -30,8 +32,8 @@ public class Death : MonoBehaviour
         gameObject.GetComponent<Music_Player_manager>().DeathSoundEvent(); //играем звуковой эффект смерти
 
         Death_explosion.transform.position = transform.position;
-        Car_model.active = false;
-        Flares.active = false;
+        Car_model.SetActive(false);
+        Flares.SetActive(false);
         Death_explosion.GetComponent<ParticleSystem>().Emit(500);
         Death_explosion.GetComponent<ParticleSystem>().Stop();
         int score = PlayerPrefs.GetInt("Score", 0);

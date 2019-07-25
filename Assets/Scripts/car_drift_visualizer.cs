@@ -9,7 +9,8 @@ public class car_drift_visualizer : MonoBehaviour
     public GameObject centerLine;
     public GameObject player;
     public GameObject dataPacket;//prefab
-    GameObject dataPacketClone;
+    [HideInInspector]
+    public GameObject dataPacketClone; //instantiated prefab
 
     Vector3 linePoint; //point of line on one line with car
 

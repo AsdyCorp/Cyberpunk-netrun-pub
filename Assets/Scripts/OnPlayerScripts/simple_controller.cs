@@ -26,8 +26,7 @@ public class simple_controller : MonoBehaviour
     public int current_plate_id;
 
     public GameObject[] Barriers; //обьекты барьеров//0-левый//1-правый
-    private bool right_barrier = false; ///проверка на столкновение с барьерами
-    private bool left_barrier = false;
+    
 
     public GameObject Event_system;
 

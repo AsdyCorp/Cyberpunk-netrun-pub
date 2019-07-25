@@ -9,7 +9,7 @@ public class Looper : MonoBehaviour
     public GameObject Player;
     Plate_generator plate_script;
     Mountains_genereator mountains_script;
-
+    public GameObject dataPacketManager;
     void Start()
     {
         plate_script = Player.GetComponent<Plate_generator>();
@@ -33,6 +33,11 @@ public class Looper : MonoBehaviour
             }
             mountains_script.mountain_next_point = new Vector3(mountains_script.mountain_next_point.x, mountains_script.mountain_next_point.y, mountains_script.mountain_next_point.z - 100);
 
+            //datapackets
+            foreach(Transform child in dataPacketManager.transform)
+            {
+                child.transform.position = new Vector3(child.transform.position.x, child.transform.position.y, child.transform.position.z - 100);
+            }
 
             Player.GetComponent<Traps_spawn>().Loop();
         }
