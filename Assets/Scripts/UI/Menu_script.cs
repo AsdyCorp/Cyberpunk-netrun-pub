@@ -18,8 +18,8 @@ public class Menu_script : MonoBehaviour
     public GameObject About_button_obj;
 
     public GameObject Settings_UI_parent_obj;
-    
 
+    public GameObject adManager;
 
 
     private int UI_level=0;  //0 - menu/ 1 - settings // 2 - about
@@ -31,6 +31,8 @@ public class Menu_script : MonoBehaviour
     {
         Time.timeScale = 1.0f;//after pause ui we have time stoped, need to start it
 
+
+        adManager.GetComponent<AdManager>().Display_Banner();
         about_path = "about.txt";
         UI_level = 0;
         Enter_button_obj.GetComponent<Button>().interactable=true;

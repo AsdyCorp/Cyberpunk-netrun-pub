@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
+using UnityEngine.SceneManagement;
 public class AdManager : MonoBehaviour
 {
 
     private string App_ID = "ca-app-pub-5124962096143531~6606067576";
-    private InterstitialAd InterstitialAd_baner;
 
+    private InterstitialAd InterstitialAd_baner;
+    private BannerView bannerAD;
     [HideInInspector]
     public bool isLoaded = false;
     [HideInInspector]
@@ -18,16 +20,32 @@ public class AdManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(SceneManager.GetActiveScene().name== "main_menu"){
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Request_Banner();
+            }
+        }
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                RequestInterstitial();
+            }
+        }
         //MobileAds.Initialize(App_ID);
-        RequestInterstitial();
+        
     }
+
+    
+
     void RequestInterstitial()
     {
         string interStitial_ID = "ca-app-pub-3940256099942544/1033173712";
         InterstitialAd_baner = new InterstitialAd(interStitial_ID);
 
         // Called when an ad request has successfully loaded.
-        
+        InterstitialAd_baner.OnAdLoaded += HandleOnAdLoaded;
         // Called when an ad request failed to load.
         InterstitialAd_baner.OnAdFailedToLoad += HandleOnAdFailedToLoad;
         // Called when an ad is shown.
@@ -47,6 +65,21 @@ public class AdManager : MonoBehaviour
         InterstitialAd_baner.LoadAd(adRequest);
     }
 
+    void Request_Banner()
+    {
+        string banner_id = "ca-app-pub-3940256099942544/6300978111";
+        bannerAD = new BannerView(banner_id, AdSize.Banner, AdPosition.Top);
+
+
+        //real
+        //AdRequest adRequest = new AdRequest.Builder().Build();
+
+        AdRequest adRequest  = new AdRequest.Builder()
+            .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b").Build();
+
+        bannerAD.LoadAd(adRequest);
+    }
+
     public void Display_InterstitialAD()
     {
         if (InterstitialAd_baner.IsLoaded())
@@ -54,6 +87,15 @@ public class AdManager : MonoBehaviour
             InterstitialAd_baner.Show();
         }
     }
+
+    public void Display_Banner()
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            bannerAD.Show();
+        }
+    }
+
 
 
     public void HandleOnAdLoaded(object sender, EventArgs args)
