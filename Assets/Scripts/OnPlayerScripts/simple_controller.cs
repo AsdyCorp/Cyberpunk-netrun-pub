@@ -163,11 +163,13 @@ public class simple_controller : MonoBehaviour
                 {
                     transform.Translate(Vector3.left * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 }
-                if (Y_car_angle >= max_rotation_angle * -1)
+                if (Y_car_angle >= max_rotation_angle * -1 * sensitivity)
                 {
                     //curRot= new Vector3(0, horizontal_speed_multiplier * -10, 0);
                     //Debug.Log();
-                    car_object_model.eulerAngles = new Vector3(0, car_object_model.eulerAngles.y - (horizontal_speed_multiplier * sensitivity*2), 0);
+                     car_object_model.eulerAngles = new Vector3(0, (-10 * horizontal_speed_multiplier * sensitivity), 0);
+                    
+                   
 
                 }
             }
@@ -179,7 +181,7 @@ public class simple_controller : MonoBehaviour
                 }
                 if (Y_car_angle >= max_rotation_angle * -1 * sensitivity)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * -300 * (Y_car_angle / 115 + 0.5f)*sensitivity );
+                    car_object_model.Rotate(Vector3.up * Time.fixedDeltaTime * -300 * (Y_car_angle / 115 + 0.5f)*sensitivity );
                 }
             }
             
@@ -195,9 +197,9 @@ public class simple_controller : MonoBehaviour
                 {
                     transform.Translate(Vector3.right * Time.fixedDeltaTime * horizontal_speed * (sensitivity / 2) * horizontal_speed_multiplier);
                 }
-                if (Y_car_angle <= max_rotation_angle)
+                if (Y_car_angle <= max_rotation_angle*sensitivity)
                 {
-                    car_object_model.eulerAngles = new Vector3(0, car_object_model.eulerAngles.y+(horizontal_speed_multiplier*sensitivity*2), 0);
+                    car_object_model.eulerAngles = new Vector3(0, (10*horizontal_speed_multiplier*sensitivity), 0);
                 }
             }
             else
@@ -208,7 +210,7 @@ public class simple_controller : MonoBehaviour
                 }
                 if (Y_car_angle <= max_rotation_angle*sensitivity)
                 {
-                    car_object_model.Rotate(Vector3.up * Time.deltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f)* sensitivity );
+                    car_object_model.Rotate(Vector3.up * Time.fixedDeltaTime * 300 * ((Y_car_angle * -1) / 115 + 0.5f)* sensitivity );
                 }
             }
         }
@@ -218,7 +220,7 @@ public class simple_controller : MonoBehaviour
 
             if (Quaternion.Angle(startRot,car_object_model.rotation)> 0.01f)
             {
-                car_object_model.rotation = Quaternion.Lerp(car_object_model.rotation, startRot, Time.deltaTime*5 );
+                car_object_model.rotation = Quaternion.Lerp(car_object_model.rotation, startRot, Time.fixedDeltaTime*5 );
             }
             else
             {

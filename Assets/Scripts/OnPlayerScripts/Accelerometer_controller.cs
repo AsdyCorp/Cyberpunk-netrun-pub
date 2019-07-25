@@ -19,8 +19,8 @@ public class Accelerometer_controller : MonoBehaviour
         GUI.Label(new Rect(10, 10, 500, 100), ""+ Input.acceleration.x);
     }*/
 
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         if (is_accel == 1)
         {

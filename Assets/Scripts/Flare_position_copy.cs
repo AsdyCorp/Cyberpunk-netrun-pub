@@ -10,7 +10,7 @@ public class Flare_position_copy : MonoBehaviour
     public Transform Car_par;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         transform.position = new Vector3(Car_model.position.x, transform.position.y, transform.position.z);

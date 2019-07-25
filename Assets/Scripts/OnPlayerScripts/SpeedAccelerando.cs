@@ -10,8 +10,8 @@ public class SpeedAccelerando : MonoBehaviour
     {
         playerController = gameObject.GetComponent<simple_controller>();
     }
-    void Update()
+    void FixedUpdate()
     {
-        playerController.forwardSpeed += Time.deltaTime / 2000;
+        playerController.forwardSpeed += Time.fixedDeltaTime / 2000;
     }
 }
