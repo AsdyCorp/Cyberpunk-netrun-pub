@@ -12,7 +12,9 @@ public class Death : MonoBehaviour
     public GameObject After_Death_UI;
     public GameObject[] Controll_UI_buttons;
     public GameObject carDriftVisulizer;
-    public GameObject Pause_button; 
+    public GameObject Pause_button;
+
+    public GameObject adManager;
     //public GameObject[] After_Death_UI_buttons;
     //public GameObject[] After_Death_UI_text;
 
@@ -66,14 +68,35 @@ public class Death : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        bool isLoaded = adManager.GetComponent<AdManager>().isLoaded;
+        bool isClosed = adManager.GetComponent<AdManager>().isClosed;
+        bool isFailed = adManager.GetComponent<AdManager>().isFailed;
+        if (isLoaded)
+        {
+            adManager.GetComponent<AdManager>().Display_InterstitialAD();
+        }
+        if (isClosed || isFailed)
+        {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
+        
         //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
     }
 
     public void Menu_exit()
     {
-        //Debug.Log("dsfds");
-        SceneManager.LoadScene("main_menu", LoadSceneMode.Single);
+        bool isLoaded = adManager.GetComponent<AdManager>().isLoaded;
+        bool isClosed = adManager.GetComponent<AdManager>().isClosed;
+        bool isFailed = adManager.GetComponent<AdManager>().isFailed;
+
+        if (isLoaded)
+        {
+            adManager.GetComponent<AdManager>().Display_InterstitialAD();
+        }
+        if (isClosed || isFailed)
+        {
+            SceneManager.LoadScene("main_menu", LoadSceneMode.Single);
+        }
     }
 
    
