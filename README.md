@@ -2,9 +2,9 @@
 Public repository of android runner racing game Cyberpunk: netrun. 
 
 # Authors
- Coding, asset creating, testing - Bohdan Vradii
- music by icons8.com
- car model by Cerberus Studio
+Сoding, asset creating, testing - Bohdan Vradii  
+music by icons8.com  
+car model by Cerberus Studio  
 
 
 # How to run
